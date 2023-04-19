@@ -1,0 +1,12 @@
+## Interface: 30401
+## Version: 0.1.0
+## Title: HighLevelAlert |T136031:16:16:0:0|t by |cff3FC7EBD4KiR |T132115:16:16:0:0|t
+## Notes: HighLevelAlert
+## Author: D4KiR
+## DefaultState: enabled
+## SavedVariables: HLATAB
+## SavedVariablesPerCharacter: HLATABPC
+## X-Curse-Project-ID: 
+## X-Wago-ID: 
+
+core.lua
