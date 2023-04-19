@@ -57,12 +57,6 @@ hla:SetScript("OnEvent", function(self, event, addonName)
 	if event == "ADDON_LOADED" and addonName == AddOnName then
 		hla:ClearAllPoints()
 
-		for i, v in pairs(SOUNDKIT) do
-			if strfind(i, "NOTIFICATION", 1, true) then
-				print(i, v)
-			end
-		end
-
 		if HLATAB.hlaPosition then
 			local p1, p2, p3, p4, p5 = unpack(HLATAB.hlaPosition)
 			hla:SetPoint(p1, p2, p3, p4, p5)
