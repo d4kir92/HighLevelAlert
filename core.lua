@@ -64,6 +64,10 @@ hla:SetScript("OnEvent", function(self, event, addonName)
 			hla:SetPoint("CENTER", UIParent, "CENTER")
 		end
 
+		for i = 1, 60 do
+			SetCVar("nameplateMaxDistance", i)
+		end
+
 		self:UnregisterEvent("ADDON_LOADED")
 	end
 end)
