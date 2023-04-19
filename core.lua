@@ -6,7 +6,7 @@ end
 
 local hla = CreateFrame("Frame", nil, UIParent)
 hla:SetSize(800, 50)
-hla:SetPoint("CENTER", 0, 200)
+hla:SetPoint("CENTER", 0, 240)
 hla:Hide()
 hla:SetMovable(true)
 hla:EnableMouse(true)
@@ -61,7 +61,7 @@ hla:SetScript("OnEvent", function(self, event, addonName)
 			local p1, p2, p3, p4, p5 = unpack(HLATAB.hlaPosition)
 			hla:SetPoint(p1, p2, p3, p4, p5)
 		else
-			hla:SetPoint("CENTER", UIParent, "CENTER")
+			hla:SetPoint("CENTER", UIParent, "CENTER", 0, 240)
 		end
 
 		for i = 1, 60 do
