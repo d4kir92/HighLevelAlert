@@ -1,15 +1,119 @@
 local AddOnName, HighLevelAlert = ...
+local DEBUG = false
+local COLR = "|cffff0000"
+local COLY = "|cffffff00"
+local COLG = "|cff00ff00"
+local COLADDON = "|cffff6060"
 
-function HighLevelAlert:MSG(msg)
-	print("[|cffff6060" .. AddOnName .. "|r] " .. msg)
+function HighLevelAlert:MSG(...)
+	print(format("[%s" .. AddOnName .. "|r] %s", COLADDON, COLG), ...)
 end
 
+function HighLevelAlert:DEB(...)
+	print(format("[%s" .. AddOnName .. "|r] [%sDEBUG|r] %s", COLADDON, COLY, COLY), ...)
+end
+
+function HighLevelAlert:ERR(...)
+	print(format("[%s" .. AddOnName .. "|r] %s", COLADDON, COLR), ...)
+end
+
+if DEBUG then
+	HighLevelAlert:DEB("> DEBUG IS ON")
+end
+
+function HighLevelAlert:Grid(n, snap)
+	n = n or 0
+	snap = snap or 10
+	local mod = n % snap
+
+	if mod > (snap / 2) then
+		return n - mod + snap
+	else
+		return n - mod
+	end
+end
+
+LHLA = LHLA or {}
+HighLevelAlert:LangenUS()
+
+if GetLocale() == "enUS" then
+	HighLevelAlert:LangenUS()
+elseif GetLocale() == "deDE" then
+	HighLevelAlert:LangdeDE()
+end
+
+function HighLevelAlert:GT(id)
+	local ts = id
+
+	if LHLA[id] then
+		ts = LHLA[id]
+
+		for i = 1, 8 do
+			ts = string.gsub(ts, "{rt" .. i .. "}", "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_" .. i .. ":16:16:0:0|t")
+		end
+
+		return ts
+	end
+
+	HighLevelAlert:ERR("MISSING TRANSLATION: " .. id)
+
+	return ts
+end
+
+--[[FRAME]]
 local hla = CreateFrame("Frame", nil, UIParent)
-hla:SetSize(800, 50)
+hla:SetSize(600, 50)
 hla:SetPoint("CENTER", 0, 240)
 hla:Hide()
+--[[TEXT]]
+hla.text = hla:CreateFontString(nil, "ARTWORK")
+hla.text:SetAllPoints(true)
+hla.text:SetFont("Fonts\\FRIZQT__.TTF", 30, "OUTLINE")
+hla.text:SetText("")
+--[[TEXTURE]]
+hla.texv = hla:CreateTexture(nil, "OVERLAY")
+hla.texv:SetColorTexture(1, 1, 1, 1)
+hla.texv:SetSize(2, hla:GetHeight())
+hla.texv:SetPoint("CENTER", hla, "CENTER")
+hla.texh = hla:CreateTexture(nil, "OVERLAY")
+hla.texh:SetColorTexture(1, 1, 1, 1)
+hla.texh:SetSize(hla:GetWidth(), 2)
+hla.texh:SetPoint("CENTER", hla, "CENTER")
+local texv = UIParent:CreateTexture(nil, "OVERLAY")
+texv:SetColorTexture(1, 1, 1, 0.5)
+texv:SetSize(2, UIParent:GetHeight())
+texv:SetPoint("CENTER", UIParent, "CENTER")
+texv:Hide()
+local texh = UIParent:CreateTexture(nil, "OVERLAY")
+texh:SetColorTexture(1, 1, 1, 0.5)
+texh:SetSize(UIParent:GetWidth(), 2)
+texh:SetPoint("CENTER", UIParent, "CENTER")
+texh:Hide()
+
+UIParent:HookScript("OnUpdate", function(self)
+	if hla:IsShown() and hla.isMoving then
+		hla.texv:Show()
+		hla.texh:Show()
+		texv:Show()
+		texh:Show()
+	else
+		hla.texv:Hide()
+		hla.texh:Hide()
+		texv:Hide()
+		texh:Hide()
+	end
+end)
+
+--[[MOVING]]
 hla:SetMovable(true)
 hla:EnableMouse(true)
+
+function HighLevelAlert:SetPosition()
+	local p1, p2, p3, p4, p5 = unpack(HLATAB.hlaPosition)
+	p4 = HighLevelAlert:Grid(p4, 10)
+	p5 = HighLevelAlert:Grid(p5, 10)
+	hla:SetPoint(p1, p2, p3, p4, p5)
+end
 
 hla:SetScript("OnMouseDown", function(self, button)
 	HLATAB.hlaFixed = HLATAB.hlaFixed or false
@@ -19,16 +123,16 @@ hla:SetScript("OnMouseDown", function(self, button)
 			self:StartMoving()
 			self.isMoving = true
 		else
-			HighLevelAlert:MSG("Warning is fixed. (not movable) (rightclick it to unlock)")
+			HighLevelAlert:MSG(HighLevelAlert:GT("LID_HELPTEXTLOCKED"))
 		end
 	elseif button == "RightButton" then
 		HLATAB.hlaFixed = not HLATAB.hlaFixed
 		hla:SetMovable(not HLATAB.hlaFixed)
 
 		if HLATAB.hlaFixed then
-			HighLevelAlert:MSG("Warning is now fixed. (not movable)")
+			HighLevelAlert:MSG(HighLevelAlert:GT("LID_LOCKEDTEXT"))
 		else
-			HighLevelAlert:MSG("Warning is now not fixed. (movable)")
+			HighLevelAlert:MSG(HighLevelAlert:GT("LID_UNLOCKEDTEXT"))
 		end
 	end
 end)
@@ -40,15 +144,16 @@ hla:SetScript("OnMouseUp", function(self, button)
 		self:StopMovingOrSizing()
 		self.isMoving = false
 		local point, _, relPoint, x, y = self:GetPoint()
+		x = HighLevelAlert:Grid(x, 10)
+		y = HighLevelAlert:Grid(y, 10)
 
 		HLATAB.hlaPosition = {point, "UIParent", relPoint, x, y}
+
+		HighLevelAlert:SetPosition()
 	end
 end)
 
-hla.text = hla:CreateFontString(nil, "ARTWORK")
-hla.text:SetAllPoints(true)
-hla.text:SetFont("Fonts\\FRIZQT__.TTF", 30)
-hla.text:SetText("")
+--[[EVENTS]]
 hla:RegisterEvent("ADDON_LOADED")
 
 hla:SetScript("OnEvent", function(self, event, addonName)
@@ -58,8 +163,7 @@ hla:SetScript("OnEvent", function(self, event, addonName)
 		hla:ClearAllPoints()
 
 		if HLATAB.hlaPosition then
-			local p1, p2, p3, p4, p5 = unpack(HLATAB.hlaPosition)
-			hla:SetPoint(p1, p2, p3, p4, p5)
+			HighLevelAlert:SetPosition()
 		else
 			hla:SetPoint("CENTER", UIParent, "CENTER", 0, 240)
 		end
@@ -68,6 +172,23 @@ hla:SetScript("OnEvent", function(self, event, addonName)
 			SetCVar("nameplateMaxDistance", i)
 		end
 
+		if GetCVarBool("nameplateShowAll") == false then
+			HighLevelAlert:MSG(format(HighLevelAlert:GT("LID_NPSCVAR"), UNIT_NAMEPLATES_AUTOMODE))
+		else
+			--[[ NPC-Enemies Nameplates ]]
+			--[[ -- is enabled, when nameplateShowAll is
+			if GetCVarBool("nameplateShowEnemies") == false then
+				HighLevelAlert:MSG(format(HighLevelAlert:GT("LID_NPSCVAR"), UNIT_NAMEPLATES_SHOW_ENEMIES))
+				SetCVar("nameplateShowEnemies", true)
+			end
+			]]
+			--[[ Player-Enemies Nameplates ]]
+			if GetCVarBool("UnitNameEnemyPlayerName") == false then
+				HighLevelAlert:MSG(format(HighLevelAlert:GT("LID_NPSCVAR"), UNIT_NAME_ENEMY))
+			end
+		end
+
+		SetCVar("ShowClassColorInNameplate", 1)
 		self:UnregisterEvent("ADDON_LOADED")
 	end
 end)
@@ -78,7 +199,7 @@ local NPSkull = {}
 local NPRedElite = {}
 local NPRed = {}
 
-local function UpdateText()
+function HighLevelAlert:UpdateText()
 	local NPPvpCount = #NPPvp
 	local NPSkullEliteCount = #NPSkullElite
 	local NPSkullCount = #NPSkull
@@ -86,19 +207,19 @@ local function UpdateText()
 	local NPRedCount = #NPRed
 
 	if NPPvpCount > 0 then
-		hla.text:SetText("|cffff0000[Warning]|r: " .. NPPvpCount .. " PVP-Player nearby!")
+		hla.text:SetText(format("[%s%s|r]: %s", COLR, HighLevelAlert:GT("LID_WARNING"), format(HighLevelAlert:GT("LID_PVPNEARBY"), NPPvpCount)))
 		hla:Show()
 	elseif NPSkullEliteCount > 0 then
-		hla.text:SetText("|cffff0000[Warning]|r: " .. NPSkullEliteCount .. " Skull Elites nearby!")
+		hla.text:SetText(format("[%s%s|r]: %s", COLR, HighLevelAlert:GT("LID_WARNING"), format(HighLevelAlert:GT("LID_SKULLELITESNEARBY"), NPSkullEliteCount)))
 		hla:Show()
 	elseif NPSkullCount > 0 then
-		hla.text:SetText("|cffff0000[Warning]|r: " .. NPSkullCount .. " Skulls nearby!")
+		hla.text:SetText(format("[%s%s|r]|r: %s", COLR, HighLevelAlert:GT("LID_WARNING"), format(HighLevelAlert:GT("LID_SKULLSNEARBY"), NPSkullCount)))
 		hla:Show()
 	elseif NPRedEliteCount > 0 then
-		hla.text:SetText("|cffeda55f[Caution]|r: " .. NPRedEliteCount .. " Red Elites nearby!")
+		hla.text:SetText(format("[%s%s|r]: %s", COLY, HighLevelAlert:GT("LID_CAUTION"), format(HighLevelAlert:GT("LID_REDELITESNEARBY"), NPRedEliteCount)))
 		hla:Show()
 	elseif NPRedCount > 0 then
-		hla.text:SetText("|cffeda55f[Caution]|r: " .. NPRedCount .. " Reds nearby!")
+		hla.text:SetText(format("[%s%s|r]: %s", COLY, HighLevelAlert:GT("LID_CAUTION"), format(HighLevelAlert:GT("LID_REDSNEARBY"), NPRedCount)))
 		hla:Show()
 	else
 		hla.text:SetText("")
@@ -116,12 +237,17 @@ FUA:SetScript("OnEvent", function(self, event, unit)
 	local isEnemy = UnitIsEnemy("player", unit)
 	local isPlayer = UnitIsPlayer(unit)
 
+	if DEBUG then
+		isEnemy = true
+		--HighLevelAlert:DEB(isEnemy, level)
+	end
+
 	if level and isEnemy then
 		local playerLevel = UnitLevel("player")
 		local isSkull = level == -1 or level >= playerLevel + 10
 		local isRed = level >= playerLevel + 3
 
-		if isPlayer then
+		if isPlayer and UnitIsPVP(unit) then
 			PlaySound(SOUNDKIT.PVP_THROUGH_QUEUE or SOUNDKIT.RAID_WARNING)
 			table.insert(NPPvp, unit)
 		elseif isSkull and isElite then
@@ -138,7 +264,7 @@ FUA:SetScript("OnEvent", function(self, event, unit)
 			table.insert(NPRed, unit)
 		end
 
-		UpdateText()
+		HighLevelAlert:UpdateText()
 	end
 end)
 
@@ -195,5 +321,5 @@ FUR:SetScript("OnEvent", function(self, event, unit)
 		end
 	end
 
-	UpdateText()
+	HighLevelAlert:UpdateText()
 end)
