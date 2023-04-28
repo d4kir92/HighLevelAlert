@@ -26,11 +26,7 @@ function HighLevelAlert:Grid(n, snap)
 	snap = snap or 10
 	local mod = n % snap
 
-	if mod > (snap / 2) then
-		return n - mod + snap
-	else
-		return n - mod
-	end
+	return (mod > (snap / 2)) and (n - mod + snap) or (n - mod)
 end
 
 LHLA = LHLA or {}
@@ -43,19 +39,16 @@ elseif GetLocale() == "deDE" then
 end
 
 function HighLevelAlert:GT(id)
-	local ts = id
+	local ts = LHLA[id]
 
-	if LHLA[id] then
-		ts = LHLA[id]
-
+	if ts then
 		for i = 1, 8 do
 			ts = string.gsub(ts, "{rt" .. i .. "}", "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_" .. i .. ":16:16:0:0|t")
 		end
-
-		return ts
+	else
+		HighLevelAlert:ERR("MISSING TRANSLATION: " .. id)
+		ts = id
 	end
-
-	HighLevelAlert:ERR("MISSING TRANSLATION: " .. id)
 
 	return ts
 end
@@ -89,18 +82,25 @@ texh:SetColorTexture(1, 1, 1, 0.5)
 texh:SetSize(UIParent:GetWidth(), 2)
 texh:SetPoint("CENTER", UIParent, "CENTER")
 texh:Hide()
+local hlaShown = nil
+local fThink = CreateFrame("FRAME")
 
-UIParent:HookScript("OnUpdate", function(self)
-	if hla:IsShown() and hla.isMoving then
-		hla.texv:Show()
-		hla.texh:Show()
-		texv:Show()
-		texh:Show()
-	else
-		hla.texv:Hide()
-		hla.texh:Hide()
-		texv:Hide()
-		texh:Hide()
+fThink:HookScript("OnUpdate", function(self)
+	if hla:IsShown() ~= hlaShown then
+		hlaShown = hla:IsShown()
+		local hlaMoving = hla.isMoving
+
+		if hlaShown and hlaMoving then
+			hla.texv:Show()
+			hla.texh:Show()
+			texv:Show()
+			texh:Show()
+		else
+			hla.texv:Hide()
+			hla.texh:Hide()
+			texv:Hide()
+			texh:Hide()
+		end
 	end
 end)
 
@@ -109,10 +109,10 @@ hla:SetMovable(true)
 hla:EnableMouse(true)
 
 function HighLevelAlert:SetPosition()
-	local p1, p2, p3, p4, p5 = unpack(HLATAB.hlaPosition)
-	p4 = HighLevelAlert:Grid(p4, 10)
-	p5 = HighLevelAlert:Grid(p5, 10)
-	hla:SetPoint(p1, p2, p3, p4, p5)
+	local point, relativeTo, relativePoint, x, y = HLATAB.hlaPosition[1], HLATAB.hlaPosition[2], HLATAB.hlaPosition[3], HLATAB.hlaPosition[4], HLATAB.hlaPosition[5]
+	x = HighLevelAlert:Grid(x, 10)
+	y = HighLevelAlert:Grid(y, 10)
+	hla:SetPoint(point, relativeTo, relativePoint, x, y)
 end
 
 hla:SetScript("OnMouseDown", function(self, button)
