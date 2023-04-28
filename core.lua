@@ -248,19 +248,19 @@ FUA:SetScript("OnEvent", function(self, event, unit)
 		local isRed = level >= playerLevel + 3
 
 		if isPlayer and UnitIsPVP(unit) then
-			PlaySound(SOUNDKIT.PVP_THROUGH_QUEUE or SOUNDKIT.RAID_WARNING)
+			PlaySound(SOUNDKIT.PVP_THROUGH_QUEUE or SOUNDKIT.RAID_WARNING, "Ambience")
 			table.insert(NPPvp, unit)
 		elseif isSkull and isElite then
-			PlaySound(SOUNDKIT.RAID_WARNING)
+			PlaySound(SOUNDKIT.RAID_WARNING, "Ambience")
 			table.insert(NPSkullElite, unit)
 		elseif isSkull then
-			PlaySound(SOUNDKIT.READY_CHECK or SOUNDKIT.RAID_WARNING)
+			PlaySound(SOUNDKIT.READY_CHECK or SOUNDKIT.RAID_WARNING, "Ambience")
 			table.insert(NPSkull, unit)
 		elseif isRed and isElite then
-			PlaySound(SOUNDKIT.ALARM_CLOCK_WARNING_2 or SOUNDKIT.RAID_WARNING)
+			PlaySound(SOUNDKIT.ALARM_CLOCK_WARNING_2 or SOUNDKIT.RAID_WARNING, "Ambience")
 			table.insert(NPRedElite, unit)
 		elseif isRed then
-			PlaySound(SOUNDKIT.GS_LOGIN or SOUNDKIT.RAID_WARNING)
+			PlaySound(SOUNDKIT.GS_LOGIN or SOUNDKIT.RAID_WARNING, "Ambience")
 			table.insert(NPRed, unit)
 		end
 
