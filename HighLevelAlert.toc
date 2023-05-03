@@ -3,8 +3,8 @@
 ## Interface-Wrath: 30401
 ## Interface: 100100
 
-## Version: 0.2.4
-## Title: HighLevelAlert |T136031:16:16:0:0|t by |cff3FC7EBD4KiR |T132115:16:16:0:0|t
+## Version: 0.2.5
+## Title: HighLevelAlert by |cff3FC7EBD4KiR |T132115:16:16:0:0|t
 ## Notes: HighLevelAlert
 ## Author: D4KiR
 ## DefaultState: enabled
@@ -12,6 +12,7 @@
 ## SavedVariablesPerCharacter: HLATABPC
 ## X-Curse-Project-ID: 852302
 ## X-Wago-ID: QNlqq46e
+## IconTexture: 136031
 
 locale/deDE.lua
 locale/enUS.lua
