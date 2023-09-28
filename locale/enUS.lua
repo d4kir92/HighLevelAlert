@@ -1,17 +1,13 @@
 -- enUS English
-local _, HighLevelAlert = ...
-LHLA = LHLA or {}
-
-function HighLevelAlert:LangenUS()
-	LHLA["LID_NPSCVAR"] = "\"%s\" (Nameplates) is turned off, please enable it."
-	LHLA["LID_WARNING"] = "Warning"
-	LHLA["LID_CAUTION"] = "Caution"
-	LHLA["LID_PVPNEARBY"] = "%d PVP-Player nearby!"
-	LHLA["LID_SKULLELITESNEARBY"] = "%d {rt8}-Elites Nearby!"
-	LHLA["LID_SKULLSNEARBY"] = "%d {rt8} Nearby!"
-	LHLA["LID_REDELITESNEARBY"] = "%d Red-Elites Nearby!"
-	LHLA["LID_REDSNEARBY"] = "%d Reds Nearby!"
-	LHLA["LID_HELPTEXTLOCKED"] = "Warning-Text is fixed, rightclick to unlock it."
-	LHLA["LID_LOCKEDTEXT"] = "Warning-Text is now locked."
-	LHLA["LID_UNLOCKEDTEXT"] = "Warning-Text is now unlocked."
-end
+local _, _ = ...
+D4:AddTrans("enUS", "LID_NPSCVAR", "\"%s\" (Nameplates) is turned off, please enable it.")
+D4:AddTrans("enUS", "LID_WARNING", "Warning")
+D4:AddTrans("enUS", "LID_CAUTION", "Caution")
+D4:AddTrans("enUS", "LID_PVPNEARBY", "%d PVP-Player nearby!")
+D4:AddTrans("enUS", "LID_SKULLELITESNEARBY", "%d {rt8}-Elites Nearby!")
+D4:AddTrans("enUS", "LID_SKULLSNEARBY", "%d {rt8} Nearby!")
+D4:AddTrans("enUS", "LID_REDELITESNEARBY", "%d Red-Elites Nearby!")
+D4:AddTrans("enUS", "LID_REDSNEARBY", "%d Reds Nearby!")
+D4:AddTrans("enUS", "LID_HELPTEXTLOCKED", "Warning-Text is fixed.")
+D4:AddTrans("enUS", "LID_LOCKEDTEXT", "Warning-Text is now locked.")
+D4:AddTrans("enUS", "LID_UNLOCKEDTEXT", "Warning-Text is now unlocked.")
