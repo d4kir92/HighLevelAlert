@@ -18,7 +18,7 @@ function HighLevelAlert:InitSettings()
             ["pTab"] = {"CENTER"},
             ["sw"] = 520,
             ["sh"] = 520,
-            ["title"] = format("HighLevelAlert |T136219:16:16:0:0|t v|cff3FC7EB%s", "0.3.4")
+            ["title"] = format("HighLevelAlert |T136219:16:16:0:0|t v|cff3FC7EB%s", "0.3.5")
         }
     )
 
@@ -101,33 +101,31 @@ function HighLevelAlert:InitSettings()
         }
     )
 
-    return slider
-end
+    D4:CreateMinimapButton(
+        {
+            ["name"] = "HighLevelAlert",
+            ["icon"] = 136219,
+            ["dbtab"] = HLATAB,
+            ["vTT"] = {"HighLevelAlert", "Leftclick - Toggle Settings", "Rightclick - Unlock/lock Text", "Shift + Rightclick - Hide Minimap Icon"},
+            ["funcL"] = function()
+                HighLevelAlert:ToggleSettings()
+            end,
+            ["funcR"] = function()
+                HighLevelAlert:ToggleFrame()
+            end,
+            ["funcSR"] = function()
+                D4:SV(HLATAB, "MMBTN", false)
+                D4:MSG("HighLevelAlert", 136219, "Minimap Button is now hidden.")
+                D4:HideMMBtn("HighLevelAlert")
+            end,
+        }
+    )
 
-D4:CreateMinimapButton(
-    {
-        ["name"] = "HighLevelAlert",
-        ["icon"] = 136219,
-        ["dbtab"] = HLATAB,
-        ["vTT"] = {"HighLevelAlert", "Leftclick - Toggle Settings", "Rightclick - Unlock/lock Text", "Shift + Rightclick - Hide Minimap Icon"},
-        ["funcL"] = function()
-            HighLevelAlert:ToggleSettings()
-        end,
-        ["funcR"] = function()
-            HighLevelAlert:ToggleFrame()
-        end,
-        ["funcSR"] = function()
-            D4:SV(HLATAB, "MMBTN", false)
-            D4:MSG("HighLevelAlert", 136219, "Minimap Button is now hidden.")
-            D4:HideMMBtn("HighLevelAlert")
-        end,
-    }
-)
-
-D4:AddSlash("hla", HighLevelAlert.ToggleSettings)
-D4:AddSlash("highlevelalert", HighLevelAlert.ToggleSettings)
-if D4:GV(HLATAB, "MMBTN", true) then
-    D4:ShowMMBtn("HighLevelAlert")
-else
-    D4:HideMMBtn("HighLevelAlert")
+    D4:AddSlash("hla", HighLevelAlert.ToggleSettings)
+    D4:AddSlash("highlevelalert", HighLevelAlert.ToggleSettings)
+    if D4:GV(HLATAB, "MMBTN", true) then
+        D4:ShowMMBtn("HighLevelAlert")
+    else
+        D4:HideMMBtn("HighLevelAlert")
+    end
 end
