@@ -1,5 +1,5 @@
 local AddOnName, HighLevelAlert = ...
-local DEBUG = true
+local DEBUG = false
 local COLR = "|cffff0000"
 local COLY = "|cffffff00"
 function HighLevelAlert:MSG(...)
