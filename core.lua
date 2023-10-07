@@ -1,5 +1,5 @@
 local AddOnName, HighLevelAlert = ...
-local DEBUG = false
+local DEBUG = true
 local COLR = "|cffff0000"
 local COLY = "|cffffff00"
 function HighLevelAlert:MSG(...)
@@ -24,7 +24,7 @@ hla:SetSize(600, 50)
 hla:SetPoint("CENTER", 0, 240)
 hla:Hide()
 --[[TEXT]]
-hla.text = hla:CreateFontString(nil, "ARTWORK")
+hla.text = hla:CreateFontString(nil, "ARTWORK", "GameFontNormal")
 hla.text:SetAllPoints(true)
 hla.text:SetFont("Fonts\\FRIZQT__.TTF", 30, "OUTLINE")
 hla.text:SetText("")
@@ -237,19 +237,44 @@ function HighLevelAlert:UpdateText()
 	local NPRedEliteCount = #NPRedElite
 	local NPRedCount = #NPRed
 	if NPPvpCount > 0 then
-		hla.text:SetText(format("[%s%s|r]: %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_PVPNEARBY"), NPPvpCount)))
+		if NPPvpCount == 1 then
+			hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_PVPNEARBY"), NPPvpCount)))
+		else
+			hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_PVPNEARBYS"), NPPvpCount)))
+		end
+
 		hla:Show()
 	elseif NPSkullEliteCount > 0 then
-		hla.text:SetText(format("[%s%s|r]: %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_SKULLELITESNEARBY"), NPSkullEliteCount)))
+		if NPSkullEliteCount == 1 then
+			hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_SKULLELITESNEARBY"), NPSkullEliteCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
+		else
+			hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_SKULLELITESNEARBYS"), NPSkullEliteCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
+		end
+
 		hla:Show()
 	elseif NPSkullCount > 0 then
-		hla.text:SetText(format("[%s%s|r]|r: %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_SKULLSNEARBY"), NPSkullCount)))
+		if NPSkullCount == 1 then
+			hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_SKULLSNEARBY"), NPSkullCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
+		else
+			hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_SKULLSNEARBYS"), NPSkullCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
+		end
+
 		hla:Show()
 	elseif NPRedEliteCount > 0 then
-		hla.text:SetText(format("[%s%s|r]: %s", COLY, D4:Trans("LID_CAUTION"), format(D4:Trans("LID_REDELITESNEARBY"), NPRedEliteCount)))
+		if NPRedEliteCount == 1 then
+			hla.text:SetText(format("[%s%s|r] %s", COLY, D4:Trans("LID_CAUTION"), format(D4:Trans("LID_REDELITESNEARBY"), NPRedEliteCount)))
+		else
+			hla.text:SetText(format("[%s%s|r] %s", COLY, D4:Trans("LID_CAUTION"), format(D4:Trans("LID_REDELITESNEARBYS"), NPRedEliteCount)))
+		end
+
 		hla:Show()
 	elseif NPRedCount > 0 then
-		hla.text:SetText(format("[%s%s|r]: %s", COLY, D4:Trans("LID_CAUTION"), format(D4:Trans("LID_REDSNEARBY"), NPRedCount)))
+		if NPRedCount == 1 then
+			hla.text:SetText(format("[%s%s|r] %s", COLY, D4:Trans("LID_CAUTION"), format(D4:Trans("LID_REDSNEARBY"), NPRedCount)))
+		else
+			hla.text:SetText(format("[%s%s|r] %s", COLY, D4:Trans("LID_CAUTION"), format(D4:Trans("LID_REDSNEARBYS"), NPRedCount)))
+		end
+
 		hla:Show()
 	else
 		hla.text:SetText("")
