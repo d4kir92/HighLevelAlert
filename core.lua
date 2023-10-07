@@ -1,4 +1,4 @@
-local AddOnName, HighLevelAlert = ...
+local _, HighLevelAlert = ...
 local DEBUG = false
 local COLR = "|cffff0000"
 local COLY = "|cffffff00"
@@ -20,14 +20,28 @@ end
 
 --[[FRAME]]
 local hla = CreateFrame("Frame", nil, UIParent)
-hla:SetSize(600, 50)
+hla:SetSize(800, 50)
 hla:SetPoint("CENTER", 0, 240)
 hla:Hide()
 --[[TEXT]]
 hla.text = hla:CreateFontString(nil, "ARTWORK", "GameFontNormal")
 hla.text:SetAllPoints(true)
-hla.text:SetFont("Fonts\\FRIZQT__.TTF", 30, "OUTLINE")
+hla.text:SetFont("Fonts\\FRIZQT__.TTF", 42, "OUTLINE")
 hla.text:SetText("")
+function HighLevelAlert:SetShowText(val)
+	if val then
+		hla:Show()
+	else
+		hla:Hide()
+	end
+end
+
+function HighLevelAlert:SetTextScale(val)
+	if val then
+		hla:SetScale(val)
+	end
+end
+
 --[[TEXTURE]]
 hla.texv = hla:CreateTexture(nil, "OVERLAY")
 hla.texv:SetColorTexture(1, 1, 1, 1)
@@ -83,6 +97,7 @@ hla:SetScript(
 	function(self, button)
 		if button == "LeftButton" and not self.isMoving then
 			if not D4:GV(HLATAB, "lockedText", true) then
+				self:SetMovable(true)
 				self:StartMoving()
 				self.isMoving = true
 				D4:ShowGrid(self)
@@ -130,12 +145,12 @@ function HighLevelAlert:ToggleFrame()
 end
 
 --[[EVENTS]]
-hla:RegisterEvent("ADDON_LOADED")
+hla:RegisterEvent("PLAYER_LOGIN")
 hla:SetScript(
 	"OnEvent",
-	function(self, event, addonName)
+	function(self, event, ...)
 		HLATAB = HLATAB or {}
-		if event == "ADDON_LOADED" and addonName == AddOnName then
+		if event == "PLAYER_LOGIN" then
 			hla:ClearAllPoints()
 			if HLATAB.hlaPosition then
 				HighLevelAlert:SetPosition()
@@ -170,57 +185,15 @@ hla:SetScript(
 			end
 
 			SetCVar("ShowClassColorInNameplate", 1)
-			local mmbtn = nil
-			D4:CreateMinimapButton(
-				{
-					["name"] = "HighLevelAlert",
-					["icon"] = 136219,
-					["var"] = mmbtn,
-					["dbtab"] = HLATAB,
-					["vTT"] = {"HighLevelAlert", "Rightclick - Unlock/lock Text", "Shift + Rightclick - Hide Minimap Icon"},
-					["funcL"] = function() end,
-					--HighLevelAlert:ToggleSettings()
-					["funcR"] = function()
-						HighLevelAlert:ToggleFrame()
-					end,
-					["funcSR"] = function()
-						D4:SV(HLATAB, "showMMBtn", false)
-						D4:MSG("HighLevelAlert", 136219, "Minimap Button is now hidden.")
-						D4:HideMMBtn("HighLevelAlert")
-					end,
-				}
-			)
-
-			if D4:GV(HLATAB, "showMMBtn", true) then
-				D4:ShowMMBtn("HighLevelAlert")
-			else
-				D4:HideMMBtn("HighLevelAlert")
+			HLATAB["TEXTSCALE"] = HLATAB["TEXTSCALE"] or 1
+			HighLevelAlert:SetTextScale(HLATAB["TEXTSCALE"])
+			if HLATAB["SHOWTEXT"] == nil then
+				HLATAB["SHOWTEXT"] = true
 			end
 
-			--D4:AddSlash("hla", HighLevelAlert.ToggleSettings)
-			--D4:AddSlash("highlevelalert", HighLevelAlert.ToggleSettings)
-			D4:AddSlash(
-				"hla",
-				function()
-					print("SLASH")
-					D4:SV(HLATAB, "showMMBtn", not D4:GV(HLATAB, "showMMBtn", true))
-					if D4:GV(HLATAB, "showMMBtn", true) then
-						D4:ShowMMBtn("HighLevelAlert")
-						D4:MSG("HighLevelAlert", 136219, "Minimap Button is now shown.")
-					else
-						D4:HideMMBtn("HighLevelAlert")
-						D4:MSG("HighLevelAlert", 136219, "Minimap Button is now hidden.")
-					end
-				end
-			)
-
-			if D4:GV(HLATAB, "showMMBtn", true) then
-				D4:ShowMMBtn("HighLevelAlert")
-			else
-				D4:HideMMBtn("HighLevelAlert")
-			end
-
-			self:UnregisterEvent("ADDON_LOADED")
+			HighLevelAlert:SetShowText(HLATAB["SHOWTEXT"])
+			HighLevelAlert:InitSettings()
+			self:UnregisterEvent("PLAYER_LOGIN")
 		end
 	end
 )
@@ -236,46 +209,51 @@ function HighLevelAlert:UpdateText()
 	local NPSkullCount = #NPSkull
 	local NPRedEliteCount = #NPRedElite
 	local NPRedCount = #NPRed
-	if NPPvpCount > 0 then
-		if NPPvpCount == 1 then
-			hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_PVPNEARBY"), NPPvpCount)))
-		else
-			hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_PVPNEARBYS"), NPPvpCount)))
-		end
+	if HLATAB["SHOWTEXT"] then
+		if NPPvpCount > 0 then
+			if NPPvpCount == 1 then
+				hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_PVPNEARBY"), NPPvpCount)))
+			else
+				hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_PVPNEARBYS"), NPPvpCount)))
+			end
 
-		hla:Show()
-	elseif NPSkullEliteCount > 0 then
-		if NPSkullEliteCount == 1 then
-			hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_SKULLELITESNEARBY"), NPSkullEliteCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
-		else
-			hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_SKULLELITESNEARBYS"), NPSkullEliteCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
-		end
+			hla:Show()
+		elseif NPSkullEliteCount > 0 then
+			if NPSkullEliteCount == 1 then
+				hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_SKULLELITESNEARBY"), NPSkullEliteCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
+			else
+				hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_SKULLELITESNEARBYS"), NPSkullEliteCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
+			end
 
-		hla:Show()
-	elseif NPSkullCount > 0 then
-		if NPSkullCount == 1 then
-			hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_SKULLSNEARBY"), NPSkullCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
-		else
-			hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_SKULLSNEARBYS"), NPSkullCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
-		end
+			hla:Show()
+		elseif NPSkullCount > 0 then
+			if NPSkullCount == 1 then
+				hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_SKULLSNEARBY"), NPSkullCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
+			else
+				hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_SKULLSNEARBYS"), NPSkullCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
+			end
 
-		hla:Show()
-	elseif NPRedEliteCount > 0 then
-		if NPRedEliteCount == 1 then
-			hla.text:SetText(format("[%s%s|r] %s", COLY, D4:Trans("LID_CAUTION"), format(D4:Trans("LID_REDELITESNEARBY"), NPRedEliteCount)))
-		else
-			hla.text:SetText(format("[%s%s|r] %s", COLY, D4:Trans("LID_CAUTION"), format(D4:Trans("LID_REDELITESNEARBYS"), NPRedEliteCount)))
-		end
+			hla:Show()
+		elseif NPRedEliteCount > 0 then
+			if NPRedEliteCount == 1 then
+				hla.text:SetText(format("[%s%s|r] %s", COLY, D4:Trans("LID_CAUTION"), format(D4:Trans("LID_REDELITESNEARBY"), NPRedEliteCount)))
+			else
+				hla.text:SetText(format("[%s%s|r] %s", COLY, D4:Trans("LID_CAUTION"), format(D4:Trans("LID_REDELITESNEARBYS"), NPRedEliteCount)))
+			end
 
-		hla:Show()
-	elseif NPRedCount > 0 then
-		if NPRedCount == 1 then
-			hla.text:SetText(format("[%s%s|r] %s", COLY, D4:Trans("LID_CAUTION"), format(D4:Trans("LID_REDSNEARBY"), NPRedCount)))
-		else
-			hla.text:SetText(format("[%s%s|r] %s", COLY, D4:Trans("LID_CAUTION"), format(D4:Trans("LID_REDSNEARBYS"), NPRedCount)))
-		end
+			hla:Show()
+		elseif NPRedCount > 0 then
+			if NPRedCount == 1 then
+				hla.text:SetText(format("[%s%s|r] %s", COLY, D4:Trans("LID_CAUTION"), format(D4:Trans("LID_REDSNEARBY"), NPRedCount)))
+			else
+				hla.text:SetText(format("[%s%s|r] %s", COLY, D4:Trans("LID_CAUTION"), format(D4:Trans("LID_REDSNEARBYS"), NPRedCount)))
+			end
 
-		hla:Show()
+			hla:Show()
+		else
+			hla.text:SetText("")
+			hla:Hide()
+		end
 	else
 		hla.text:SetText("")
 		hla:Hide()
