@@ -61,7 +61,6 @@ texh:SetColorTexture(1, 1, 1, 0.5)
 texh:SetSize(UIParent:GetWidth(), 2)
 texh:SetPoint("CENTER", UIParent, "CENTER")
 texh:Hide()
-hla:EnableMouse(true)
 local hlaShown = nil
 local fThink = CreateFrame("FRAME")
 fThink:HookScript(
@@ -98,6 +97,7 @@ hla:SetScript(
 		if button == "LeftButton" and not self.isMoving then
 			if not D4:GV(HLATAB, "lockedText", true) then
 				self:SetMovable(true)
+				self:EnableMouse(true)
 				self:StartMoving()
 				self.isMoving = true
 				D4:ShowGrid(self)
@@ -129,9 +129,11 @@ function HighLevelAlert:ToggleFrame()
 		D4:SV(HLATAB, "lockedText", not D4:GV(HLATAB, "lockedText", true))
 		if D4:GV(HLATAB, "lockedText", true) then
 			hla:SetMovable(false)
+			hla:EnableMouse(false)
 			D4:MSG("HighLevelAlert", 136219, "Text is now locked.")
 		else
 			hla:SetMovable(true)
+			hla:EnableMouse(true)
 			D4:MSG("HighLevelAlert", 136219, "Text is now unlocked.")
 		end
 	else
@@ -160,8 +162,10 @@ hla:SetScript(
 
 			if D4:GV(HLATAB, "lockedText", true) then
 				hla:SetMovable(true)
+				hla:EnableMouse(true)
 			else
 				hla:SetMovable(false)
+				hla:EnableMouse(false)
 			end
 
 			for i = 1, 60 do
