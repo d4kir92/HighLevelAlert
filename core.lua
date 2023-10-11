@@ -19,7 +19,7 @@ if DEBUG then
 end
 
 --[[FRAME]]
-local hla = CreateFrame("Frame", nil, UIParent)
+local hla = CreateFrame("Frame", "HighLevelAlertFrame", UIParent)
 hla:SetSize(800, 50)
 hla:SetPoint("CENTER", 0, 240)
 hla:Hide()
@@ -96,8 +96,8 @@ hla:SetScript(
 	function(self, button)
 		if button == "LeftButton" and not self.isMoving then
 			if not D4:GV(HLATAB, "lockedText", true) then
-				self:SetMovable(true)
 				self:EnableMouse(true)
+				self:SetMovable(true)
 				self:StartMoving()
 				self.isMoving = true
 				D4:ShowGrid(self)
@@ -128,12 +128,12 @@ function HighLevelAlert:ToggleFrame()
 	if hla then
 		D4:SV(HLATAB, "lockedText", not D4:GV(HLATAB, "lockedText", true))
 		if D4:GV(HLATAB, "lockedText", true) then
-			hla:SetMovable(false)
 			hla:EnableMouse(false)
+			hla:SetMovable(false)
 			D4:MSG("HighLevelAlert", 136219, "Text is now locked.")
 		else
-			hla:SetMovable(true)
 			hla:EnableMouse(true)
+			hla:SetMovable(true)
 			D4:MSG("HighLevelAlert", 136219, "Text is now unlocked.")
 		end
 	else
@@ -161,11 +161,11 @@ hla:SetScript(
 			end
 
 			if D4:GV(HLATAB, "lockedText", true) then
-				hla:SetMovable(true)
-				hla:EnableMouse(true)
-			else
-				hla:SetMovable(false)
 				hla:EnableMouse(false)
+				hla:SetMovable(false)
+			else
+				hla:EnableMouse(true)
+				hla:SetMovable(true)
 			end
 
 			for i = 1, 60 do
