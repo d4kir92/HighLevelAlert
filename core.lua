@@ -213,7 +213,7 @@ function HighLevelAlert:UpdateText()
 	local NPSkullCount = #NPSkull
 	local NPRedEliteCount = #NPRedElite
 	local NPRedCount = #NPRed
-	if HLATAB["SHOWTEXT"] then
+	if HLATAB["SHOWTEXT"] and not UnitOnTaxi("player") then
 		if NPPvpCount > 0 then
 			if NPPvpCount == 1 then
 				hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_PVPNEARBY"), NPPvpCount)))
@@ -284,20 +284,34 @@ FUA:SetScript(
 			local isSkull = level == -1 or level >= playerLevel + 10
 			local isRed = level >= playerLevel + 3
 			if isPlayer and UnitIsPVP(unit) and D4:GV(HLATAB, "SHOWWARNINGFORPLAYERS", true) then
-				PlaySound(SOUNDKIT.PVP_THROUGH_QUEUE or SOUNDKIT.RAID_WARNING, "Ambience")
-				table.insert(NPPvp, unit)
+				if not UnitOnTaxi("player") then
+					PlaySound(SOUNDKIT.PVP_THROUGH_QUEUE or SOUNDKIT.RAID_WARNING, "Ambience")
+					table.insert(NPPvp, unit)
+				end
 			elseif not isPlayer then
 				if isSkull and isElite then
-					PlaySound(SOUNDKIT.RAID_WARNING, "Ambience")
+					if not UnitOnTaxi("player") then
+						PlaySound(SOUNDKIT.RAID_WARNING, "Ambience")
+					end
+
 					table.insert(NPSkullElite, unit)
 				elseif isSkull then
-					PlaySound(SOUNDKIT.READY_CHECK or SOUNDKIT.RAID_WARNING, "Ambience")
+					if not UnitOnTaxi("player") then
+						PlaySound(SOUNDKIT.READY_CHECK or SOUNDKIT.RAID_WARNING, "Ambience")
+					end
+
 					table.insert(NPSkull, unit)
 				elseif isRed and isElite then
-					PlaySound(SOUNDKIT.ALARM_CLOCK_WARNING_2 or SOUNDKIT.RAID_WARNING, "Ambience")
+					if not UnitOnTaxi("player") then
+						PlaySound(SOUNDKIT.ALARM_CLOCK_WARNING_2 or SOUNDKIT.RAID_WARNING, "Ambience")
+					end
+
 					table.insert(NPRedElite, unit)
 				elseif isRed then
-					PlaySound(SOUNDKIT.GS_LOGIN or SOUNDKIT.RAID_WARNING, "Ambience")
+					if not UnitOnTaxi("player") then
+						PlaySound(SOUNDKIT.GS_LOGIN or SOUNDKIT.RAID_WARNING, "Ambience")
+					end
+
 					table.insert(NPRed, unit)
 				end
 			end
