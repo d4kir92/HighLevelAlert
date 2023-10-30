@@ -18,7 +18,7 @@ function HighLevelAlert:InitSettings()
             ["pTab"] = {"CENTER"},
             ["sw"] = 520,
             ["sh"] = 520,
-            ["title"] = format("HighLevelAlert |T136219:16:16:0:0|t v|cff3FC7EB%s", "0.3.9")
+            ["title"] = format("HighLevelAlert |T136219:16:16:0:0|t v|cff3FC7EB%s", "0.4.0")
         }
     )
 
@@ -98,6 +98,23 @@ function HighLevelAlert:InitSettings()
                     HighLevelAlert:SetTextScale(val)
                 end
             end,
+        }
+    )
+
+    y = y - 45
+    if HLATAB["SHOWWARNINGFORPLAYERS"] == nil then
+        HLATAB["SHOWWARNINGFORPLAYERS"] = true
+    end
+
+    D4:CreateCheckbox(
+        {
+            ["name"] = "LID_SHOWWARNINGFORPLAYERS",
+            ["parent"] = hla_settings,
+            ["pTab"] = {"TOPLEFT", 10, y},
+            ["value"] = HLATAB["SHOWWARNINGFORPLAYERS"],
+            ["funcV"] = function(sel, checked)
+                HLATAB["SHOWWARNINGFORPLAYERS"] = checked
+            end
         }
     )
 

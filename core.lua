@@ -283,21 +283,23 @@ FUA:SetScript(
 			local playerLevel = UnitLevel("player")
 			local isSkull = level == -1 or level >= playerLevel + 10
 			local isRed = level >= playerLevel + 3
-			if isPlayer and UnitIsPVP(unit) then
+			if isPlayer and UnitIsPVP(unit) and D4:GV(HLATAB, "SHOWWARNINGFORPLAYERS", true) then
 				PlaySound(SOUNDKIT.PVP_THROUGH_QUEUE or SOUNDKIT.RAID_WARNING, "Ambience")
 				table.insert(NPPvp, unit)
-			elseif isSkull and isElite then
-				PlaySound(SOUNDKIT.RAID_WARNING, "Ambience")
-				table.insert(NPSkullElite, unit)
-			elseif isSkull then
-				PlaySound(SOUNDKIT.READY_CHECK or SOUNDKIT.RAID_WARNING, "Ambience")
-				table.insert(NPSkull, unit)
-			elseif isRed and isElite then
-				PlaySound(SOUNDKIT.ALARM_CLOCK_WARNING_2 or SOUNDKIT.RAID_WARNING, "Ambience")
-				table.insert(NPRedElite, unit)
-			elseif isRed then
-				PlaySound(SOUNDKIT.GS_LOGIN or SOUNDKIT.RAID_WARNING, "Ambience")
-				table.insert(NPRed, unit)
+			elseif not isPlayer then
+				if isSkull and isElite then
+					PlaySound(SOUNDKIT.RAID_WARNING, "Ambience")
+					table.insert(NPSkullElite, unit)
+				elseif isSkull then
+					PlaySound(SOUNDKIT.READY_CHECK or SOUNDKIT.RAID_WARNING, "Ambience")
+					table.insert(NPSkull, unit)
+				elseif isRed and isElite then
+					PlaySound(SOUNDKIT.ALARM_CLOCK_WARNING_2 or SOUNDKIT.RAID_WARNING, "Ambience")
+					table.insert(NPRedElite, unit)
+				elseif isRed then
+					PlaySound(SOUNDKIT.GS_LOGIN or SOUNDKIT.RAID_WARNING, "Ambience")
+					table.insert(NPRed, unit)
+				end
 			end
 
 			HighLevelAlert:UpdateText()
