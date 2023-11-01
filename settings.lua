@@ -18,7 +18,7 @@ function HighLevelAlert:InitSettings()
             ["pTab"] = {"CENTER"},
             ["sw"] = 520,
             ["sh"] = 520,
-            ["title"] = format("HighLevelAlert |T136219:16:16:0:0|t v|cff3FC7EB%s", "0.4.1")
+            ["title"] = format("HighLevelAlert |T136219:16:16:0:0|t v|cff3FC7EB%s", "0.4.2")
         }
     )
 
@@ -38,7 +38,7 @@ function HighLevelAlert:InitSettings()
     y = y - 15
     D4:CreateCheckbox(
         {
-            ["name"] = "showMinimapButton",
+            ["name"] = "LID_SHOWMINIMAPBUTTON",
             ["parent"] = hla_settings,
             ["pTab"] = {"TOPLEFT", 10, y},
             ["value"] = HLATAB["MMBTN"],

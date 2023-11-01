@@ -18,11 +18,10 @@ if DEBUG then
 	HighLevelAlert:DEB("> DEBUG IS ON")
 end
 
-function getFontName()
-    if GetLocale() == "koKR" then
-        return "Fonts\\2002.TTF"
-    end
-    return "Fonts\\FRIZQT__.TTF"
+local function getFontName()
+	if GetLocale() == "koKR" or GetLocale() == "zhCN" or GetLocale() == "zhTW" then return "Fonts\\2002.TTF" end
+
+	return "Fonts\\FRIZQT__.TTF"
 end
 
 --[[FRAME]]
