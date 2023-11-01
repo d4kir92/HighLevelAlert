@@ -18,6 +18,13 @@ if DEBUG then
 	HighLevelAlert:DEB("> DEBUG IS ON")
 end
 
+function getFontName()
+    if GetLocale() == "koKR" then
+        return "Fonts\\2002.TTF"
+    end
+    return "Fonts\\FRIZQT__.TTF"
+end
+
 --[[FRAME]]
 local hla = CreateFrame("Frame", "HighLevelAlertFrame", UIParent)
 hla:SetSize(800, 50)
@@ -26,7 +33,7 @@ hla:Hide()
 --[[TEXT]]
 hla.text = hla:CreateFontString(nil, "ARTWORK", "GameFontNormal")
 hla.text:SetAllPoints(true)
-hla.text:SetFont("Fonts\\FRIZQT__.TTF", 42, "OUTLINE")
+hla.text:SetFont(getFontName(), 42, "OUTLINE")
 hla.text:SetText("")
 function HighLevelAlert:SetShowText(val)
 	if val then

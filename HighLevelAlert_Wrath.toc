@@ -12,6 +12,7 @@
 libs\D4Lib\D4Lib.xml
 
 locale/deDE.lua
+locale/koKR.lua
 locale/enUS.lua
 settings.lua
 core.lua
