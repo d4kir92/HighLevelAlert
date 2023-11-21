@@ -174,8 +174,15 @@ hla:SetScript(
 				hla:SetMovable(true)
 			end
 
-			for i = 1, 60 do
-				SetCVar("nameplateMaxDistance", i)
+			for i = 1, 100 do
+				if GetCVar("nameplateMaxDistance", i) ~= nil then
+					local currentDist = tonumber(GetCVar("nameplateMaxDistance", i))
+					if i > currentDist then
+						SetCVar("nameplateMaxDistance", i)
+						currentDist = tonumber(GetCVar("nameplateMaxDistance", i))
+						if currentDist ~= i then break end
+					end
+				end
 			end
 
 			if GetCVarBool("nameplateShowAll") == false then
