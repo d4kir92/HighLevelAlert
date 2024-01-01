@@ -1,4 +1,4 @@
-local _, HighLevelAlert = ...
+local AddonName, HighLevelAlert = ...
 local hla_settings = nil
 function HighLevelAlert:ToggleSettings()
     if hla_settings then
@@ -12,13 +12,14 @@ end
 
 function HighLevelAlert:InitSettings()
     HLATAB = HLATAB or {}
+    D4:SetVersion(AddonName, 136219, "0.4.8")
     hla_settings = D4:CreateFrame(
         {
             ["name"] = "HighLevelAlert",
             ["pTab"] = {"CENTER"},
             ["sw"] = 520,
             ["sh"] = 520,
-            ["title"] = format("HighLevelAlert |T136219:16:16:0:0|t v|cff3FC7EB%s", "0.4.7")
+            ["title"] = format("HighLevelAlert |T136219:16:16:0:0|t v|cff3FC7EB%s", "0.4.8")
         }
     )
 
