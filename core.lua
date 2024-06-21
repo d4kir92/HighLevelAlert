@@ -2,22 +2,6 @@ local _, HighLevelAlert = ...
 local DEBUG = false
 local COLR = "|cffff0000"
 local COLY = "|cffffff00"
-function HighLevelAlert:MSG(...)
-	D4:MSG("HLA", 136219, ...)
-end
-
-function HighLevelAlert:DEB(...)
-	D4:MSG("HLA", 136219, ...)
-end
-
-function HighLevelAlert:ERR(...)
-	D4:MSG("HLA", 136219, ...)
-end
-
-if DEBUG then
-	HighLevelAlert:DEB("> DEBUG IS ON")
-end
-
 local function getFontName()
 	if GetLocale() == "koKR" or GetLocale() == "zhCN" or GetLocale() == "zhTW" then return "Fonts\\2002.TTF" end
 
@@ -92,8 +76,8 @@ fThink:HookScript(
 
 function HighLevelAlert:SetPosition()
 	local point, relativeTo, relativePoint, x, y = HLATAB.hlaPosition[1], HLATAB.hlaPosition[2], HLATAB.hlaPosition[3], HLATAB.hlaPosition[4], HLATAB.hlaPosition[5]
-	x = D4:Grid(x, 10)
-	y = D4:Grid(y, 10)
+	x = HighLevelAlert:Grid(x, 10)
+	y = HighLevelAlert:Grid(y, 10)
 	hla:SetPoint(point, relativeTo, relativePoint, x, y)
 end
 
@@ -101,14 +85,14 @@ hla:SetScript(
 	"OnMouseDown",
 	function(self, button)
 		if button == "LeftButton" and not self.isMoving then
-			if not D4:GV(HLATAB, "lockedText", true) then
+			if not HighLevelAlert:GV(HLATAB, "lockedText", true) then
 				self:EnableMouse(true)
 				self:SetMovable(true)
 				self:StartMoving()
 				self.isMoving = true
-				D4:ShowGrid(self)
+				HighLevelAlert:ShowGrid(self)
 			else
-				HighLevelAlert:MSG(D4:Trans("LID_HELPTEXTLOCKED"))
+				HighLevelAlert:MSG(HighLevelAlert:Trans("LID_HELPTEXTLOCKED"))
 			end
 		end
 	end
@@ -121,26 +105,26 @@ hla:SetScript(
 			self:StopMovingOrSizing()
 			self.isMoving = false
 			local point, _, relPoint, x, y = self:GetPoint()
-			x = D4:Grid(x, 10)
-			y = D4:Grid(y, 10)
+			x = HighLevelAlert:Grid(x, 10)
+			y = HighLevelAlert:Grid(y, 10)
 			HLATAB.hlaPosition = {point, "UIParent", relPoint, x, y}
 			HighLevelAlert:SetPosition()
-			D4:HideGrid(self)
+			HighLevelAlert:HideGrid(self)
 		end
 	end
 )
 
 function HighLevelAlert:ToggleFrame()
 	if hla then
-		D4:SV(HLATAB, "lockedText", not D4:GV(HLATAB, "lockedText", true))
-		if D4:GV(HLATAB, "lockedText", true) then
+		HighLevelAlert:SV(HLATAB, "lockedText", not HighLevelAlert:GV(HLATAB, "lockedText", true))
+		if HighLevelAlert:GV(HLATAB, "lockedText", true) then
 			hla:EnableMouse(false)
 			hla:SetMovable(false)
-			D4:MSG("HighLevelAlert", 136219, "Text is now locked.")
+			HighLevelAlert:MSG("Text is now locked.")
 		else
 			hla:EnableMouse(true)
 			hla:SetMovable(true)
-			D4:MSG("HighLevelAlert", 136219, "Text is now unlocked.")
+			HighLevelAlert:MSG("Text is now unlocked.")
 		end
 	else
 		C_Timer.After(
@@ -166,7 +150,7 @@ hla:SetScript(
 				hla:SetPoint("CENTER", UIParent, "CENTER", 0, 240)
 			end
 
-			if D4:GV(HLATAB, "lockedText", true) then
+			if HighLevelAlert:GV(HLATAB, "lockedText", true) then
 				hla:EnableMouse(false)
 				hla:SetMovable(false)
 			else
@@ -186,18 +170,18 @@ hla:SetScript(
 			end
 
 			if GetCVarBool("nameplateShowAll") == false then
-				HighLevelAlert:MSG(format(D4:Trans("LID_NPSCVAR"), UNIT_NAMEPLATES_AUTOMODE))
+				HighLevelAlert:MSG(format(HighLevelAlert:Trans("LID_NPSCVAR"), UNIT_NAMEPLATES_AUTOMODE))
 			else
 				--[[ NPC-Enemies Nameplates ]]
 				-- is enabled, when nameplateShowAll is
 				if GetCVarBool("nameplateShowEnemies") == false then
-					HighLevelAlert:MSG(format(D4:Trans("LID_NPSCVAR"), UNIT_NAMEPLATES_SHOW_ENEMIES))
+					HighLevelAlert:MSG(format(HighLevelAlert:Trans("LID_NPSCVAR"), UNIT_NAMEPLATES_SHOW_ENEMIES))
 					SetCVar("nameplateShowEnemies", true)
 				end
 
 				--[[ Player-Enemies Nameplates ]]
 				if GetCVarBool("UnitNameEnemyPlayerName") == false then
-					HighLevelAlert:MSG(format(D4:Trans("LID_NPSCVAR"), UNIT_NAME_ENEMY))
+					HighLevelAlert:MSG(format(HighLevelAlert:Trans("LID_NPSCVAR"), UNIT_NAME_ENEMY))
 				end
 			end
 
@@ -229,41 +213,41 @@ function HighLevelAlert:UpdateText()
 	if HLATAB["SHOWTEXT"] and not UnitOnTaxi("player") then
 		if NPPvpCount > 0 then
 			if NPPvpCount == 1 then
-				hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_PVPNEARBY"), NPPvpCount)))
+				hla.text:SetText(format("[%s%s|r] %s", COLR, HighLevelAlert:Trans("LID_WARNING"), format(HighLevelAlert:Trans("LID_PVPNEARBY"), NPPvpCount)))
 			else
-				hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_PVPNEARBYS"), NPPvpCount)))
+				hla.text:SetText(format("[%s%s|r] %s", COLR, HighLevelAlert:Trans("LID_WARNING"), format(HighLevelAlert:Trans("LID_PVPNEARBYS"), NPPvpCount)))
 			end
 
 			hla:Show()
 		elseif NPSkullEliteCount > 0 then
 			if NPSkullEliteCount == 1 then
-				hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_SKULLELITESNEARBY"), NPSkullEliteCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
+				hla.text:SetText(format("[%s%s|r] %s", COLR, HighLevelAlert:Trans("LID_WARNING"), format(HighLevelAlert:Trans("LID_SKULLELITESNEARBY"), NPSkullEliteCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
 			else
-				hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_SKULLELITESNEARBYS"), NPSkullEliteCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
+				hla.text:SetText(format("[%s%s|r] %s", COLR, HighLevelAlert:Trans("LID_WARNING"), format(HighLevelAlert:Trans("LID_SKULLELITESNEARBYS"), NPSkullEliteCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
 			end
 
 			hla:Show()
 		elseif NPSkullCount > 0 then
 			if NPSkullCount == 1 then
-				hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_SKULLSNEARBY"), NPSkullCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
+				hla.text:SetText(format("[%s%s|r] %s", COLR, HighLevelAlert:Trans("LID_WARNING"), format(HighLevelAlert:Trans("LID_SKULLSNEARBY"), NPSkullCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
 			else
-				hla.text:SetText(format("[%s%s|r] %s", COLR, D4:Trans("LID_WARNING"), format(D4:Trans("LID_SKULLSNEARBYS"), NPSkullCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
+				hla.text:SetText(format("[%s%s|r] %s", COLR, HighLevelAlert:Trans("LID_WARNING"), format(HighLevelAlert:Trans("LID_SKULLSNEARBYS"), NPSkullCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
 			end
 
 			hla:Show()
 		elseif NPRedEliteCount > 0 then
 			if NPRedEliteCount == 1 then
-				hla.text:SetText(format("[%s%s|r] %s", COLY, D4:Trans("LID_CAUTION"), format(D4:Trans("LID_REDELITESNEARBY"), NPRedEliteCount)))
+				hla.text:SetText(format("[%s%s|r] %s", COLY, HighLevelAlert:Trans("LID_CAUTION"), format(HighLevelAlert:Trans("LID_REDELITESNEARBY"), NPRedEliteCount)))
 			else
-				hla.text:SetText(format("[%s%s|r] %s", COLY, D4:Trans("LID_CAUTION"), format(D4:Trans("LID_REDELITESNEARBYS"), NPRedEliteCount)))
+				hla.text:SetText(format("[%s%s|r] %s", COLY, HighLevelAlert:Trans("LID_CAUTION"), format(HighLevelAlert:Trans("LID_REDELITESNEARBYS"), NPRedEliteCount)))
 			end
 
 			hla:Show()
 		elseif NPRedCount > 0 then
 			if NPRedCount == 1 then
-				hla.text:SetText(format("[%s%s|r] %s", COLY, D4:Trans("LID_CAUTION"), format(D4:Trans("LID_REDSNEARBY"), NPRedCount)))
+				hla.text:SetText(format("[%s%s|r] %s", COLY, HighLevelAlert:Trans("LID_CAUTION"), format(HighLevelAlert:Trans("LID_REDSNEARBY"), NPRedCount)))
 			else
-				hla.text:SetText(format("[%s%s|r] %s", COLY, D4:Trans("LID_CAUTION"), format(D4:Trans("LID_REDSNEARBYS"), NPRedCount)))
+				hla.text:SetText(format("[%s%s|r] %s", COLY, HighLevelAlert:Trans("LID_CAUTION"), format(HighLevelAlert:Trans("LID_REDSNEARBYS"), NPRedCount)))
 			end
 
 			hla:Show()
@@ -289,14 +273,13 @@ FUA:SetScript(
 		local isPlayer = UnitIsPlayer(unit)
 		if DEBUG then
 			isEnemy = true
-			--HighLevelAlert:DEB(isEnemy, level)
 		end
 
 		if level and isEnemy then
 			local playerLevel = UnitLevel("player")
 			local isSkull = level == -1 or level >= playerLevel + 10
 			local isRed = level >= playerLevel + 3
-			if isPlayer and UnitIsPVP(unit) and D4:GV(HLATAB, "SHOWWARNINGFORPLAYERS", true) then
+			if isPlayer and UnitIsPVP(unit) and HighLevelAlert:GV(HLATAB, "SHOWWARNINGFORPLAYERS", true) then
 				if not UnitOnTaxi("player") then
 					PlaySound(SOUNDKIT.PVP_THROUGH_QUEUE or SOUNDKIT.RAID_WARNING, "Ambience")
 					table.insert(NPPvp, unit)

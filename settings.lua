@@ -1,4 +1,5 @@
 local AddonName, HighLevelAlert = ...
+HighLevelAlert:SetAddonOutput("HighLevelAlert", 136219)
 local hla_settings = nil
 function HighLevelAlert:ToggleSettings()
     if hla_settings then
@@ -12,14 +13,14 @@ end
 
 function HighLevelAlert:InitSettings()
     HLATAB = HLATAB or {}
-    D4:SetVersion(AddonName, 136219, "0.4.33")
-    hla_settings = D4:CreateFrame(
+    HighLevelAlert:SetVersion(AddonName, 136219, "0.4.34")
+    hla_settings = HighLevelAlert:CreateFrame(
         {
             ["name"] = "HighLevelAlert",
             ["pTab"] = {"CENTER"},
             ["sw"] = 520,
             ["sh"] = 520,
-            ["title"] = format("HighLevelAlert |T136219:16:16:0:0|t v|cff3FC7EB%s", "0.4.33")
+            ["title"] = format("HighLevelAlert |T136219:16:16:0:0|t v|cff3FC7EB%s", "0.4.34")
         }
     )
 
@@ -28,7 +29,7 @@ function HighLevelAlert:InitSettings()
         HLATAB["MMBTN"] = true
     end
 
-    D4:AddCategory(
+    HighLevelAlert:AddCategory(
         {
             ["name"] = "LID_GENERAL",
             ["parent"] = hla_settings,
@@ -37,7 +38,7 @@ function HighLevelAlert:InitSettings()
     )
 
     y = y - 15
-    D4:CreateCheckbox(
+    HighLevelAlert:CreateCheckbox(
         {
             ["name"] = "LID_SHOWMINIMAPBUTTON",
             ["parent"] = hla_settings,
@@ -46,16 +47,16 @@ function HighLevelAlert:InitSettings()
             ["funcV"] = function(sel, checked)
                 HLATAB["MMBTN"] = checked
                 if HLATAB["MMBTN"] then
-                    D4:ShowMMBtn("HighLevelAlert")
+                    HighLevelAlert:ShowMMBtn("HighLevelAlert")
                 else
-                    D4:HideMMBtn("HighLevelAlert")
+                    HighLevelAlert:HideMMBtn("HighLevelAlert")
                 end
             end
         }
     )
 
     y = y - 45
-    D4:AddCategory(
+    HighLevelAlert:AddCategory(
         {
             ["name"] = "LID_TEXT",
             ["parent"] = hla_settings,
@@ -68,7 +69,7 @@ function HighLevelAlert:InitSettings()
         HLATAB["SHOWTEXT"] = true
     end
 
-    D4:CreateCheckbox(
+    HighLevelAlert:CreateCheckbox(
         {
             ["name"] = "LID_SHOWTEXT",
             ["parent"] = hla_settings,
@@ -83,7 +84,7 @@ function HighLevelAlert:InitSettings()
 
     y = y - 45
     HLATAB["TEXTSCALE"] = HLATAB["TEXTSCALE"] or 1
-    D4:CreateSlider(
+    HighLevelAlert:CreateSlider(
         {
             ["name"] = "LID_TEXTSCALE",
             ["parent"] = hla_settings,
@@ -107,7 +108,7 @@ function HighLevelAlert:InitSettings()
         HLATAB["SHOWWARNINGFORPLAYERS"] = true
     end
 
-    D4:CreateCheckbox(
+    HighLevelAlert:CreateCheckbox(
         {
             ["name"] = "LID_SHOWWARNINGFORPLAYERS",
             ["parent"] = hla_settings,
@@ -119,7 +120,7 @@ function HighLevelAlert:InitSettings()
         }
     )
 
-    D4:CreateMinimapButton(
+    HighLevelAlert:CreateMinimapButton(
         {
             ["name"] = "HighLevelAlert",
             ["icon"] = 136219,
@@ -132,18 +133,18 @@ function HighLevelAlert:InitSettings()
                 HighLevelAlert:ToggleFrame()
             end,
             ["funcSR"] = function()
-                D4:SV(HLATAB, "MMBTN", false)
-                D4:MSG("HighLevelAlert", 136219, "Minimap Button is now hidden.")
-                D4:HideMMBtn("HighLevelAlert")
+                HighLevelAlert:SV(HLATAB, "MMBTN", false)
+                HighLevelAlert:MSG("Minimap Button is now hidden.")
+                HighLevelAlert:HideMMBtn("HighLevelAlert")
             end,
         }
     )
 
-    D4:AddSlash("hla", HighLevelAlert.ToggleSettings)
-    D4:AddSlash("highlevelalert", HighLevelAlert.ToggleSettings)
-    if D4:GV(HLATAB, "MMBTN", true) then
-        D4:ShowMMBtn("HighLevelAlert")
+    HighLevelAlert:AddSlash("hla", HighLevelAlert.ToggleSettings)
+    HighLevelAlert:AddSlash("highlevelalert", HighLevelAlert.ToggleSettings)
+    if HighLevelAlert:GV(HLATAB, "MMBTN", true) then
+        HighLevelAlert:ShowMMBtn("HighLevelAlert")
     else
-        D4:HideMMBtn("HighLevelAlert")
+        HighLevelAlert:HideMMBtn("HighLevelAlert")
     end
 end
