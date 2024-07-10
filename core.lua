@@ -92,7 +92,7 @@ hla:SetScript(
 				self.isMoving = true
 				HighLevelAlert:ShowGrid(self)
 			else
-				HighLevelAlert:MSG(HighLevelAlert:Trans("LID_HELPTEXTLOCKED"))
+				HighLevelAlert:MSG(HighLevelAlert:Trans("HELPTEXTLOCKED"))
 			end
 		end
 	end
@@ -170,18 +170,18 @@ hla:SetScript(
 			end
 
 			if GetCVarBool("nameplateShowAll") == false then
-				HighLevelAlert:MSG(format(HighLevelAlert:Trans("LID_NPSCVAR"), UNIT_NAMEPLATES_AUTOMODE))
+				HighLevelAlert:MSG(format(HighLevelAlert:Trans("NPSCVAR"), UNIT_NAMEPLATES_AUTOMODE))
 			else
 				--[[ NPC-Enemies Nameplates ]]
 				-- is enabled, when nameplateShowAll is
 				if GetCVarBool("nameplateShowEnemies") == false then
-					HighLevelAlert:MSG(format(HighLevelAlert:Trans("LID_NPSCVAR"), UNIT_NAMEPLATES_SHOW_ENEMIES))
+					HighLevelAlert:MSG(format(HighLevelAlert:Trans("NPSCVAR"), UNIT_NAMEPLATES_SHOW_ENEMIES))
 					SetCVar("nameplateShowEnemies", true)
 				end
 
 				--[[ Player-Enemies Nameplates ]]
 				if GetCVarBool("UnitNameEnemyPlayerName") == false then
-					HighLevelAlert:MSG(format(HighLevelAlert:Trans("LID_NPSCVAR"), UNIT_NAME_ENEMY))
+					HighLevelAlert:MSG(format(HighLevelAlert:Trans("NPSCVAR"), UNIT_NAME_ENEMY))
 				end
 			end
 
@@ -213,41 +213,41 @@ function HighLevelAlert:UpdateText()
 	if HLATAB["SHOWTEXT"] and not UnitOnTaxi("player") then
 		if NPPvpCount > 0 then
 			if NPPvpCount == 1 then
-				hla.text:SetText(format("[%s%s|r] %s", COLR, HighLevelAlert:Trans("LID_WARNING"), format(HighLevelAlert:Trans("LID_PVPNEARBY"), NPPvpCount)))
+				hla.text:SetText(format("[%s%s|r] %s", COLR, HighLevelAlert:Trans("WARNING"), format(HighLevelAlert:Trans("PVPNEARBY"), NPPvpCount)))
 			else
-				hla.text:SetText(format("[%s%s|r] %s", COLR, HighLevelAlert:Trans("LID_WARNING"), format(HighLevelAlert:Trans("LID_PVPNEARBYS"), NPPvpCount)))
+				hla.text:SetText(format("[%s%s|r] %s", COLR, HighLevelAlert:Trans("WARNING"), format(HighLevelAlert:Trans("PVPNEARBYS"), NPPvpCount)))
 			end
 
 			hla:Show()
 		elseif NPSkullEliteCount > 0 then
 			if NPSkullEliteCount == 1 then
-				hla.text:SetText(format("[%s%s|r] %s", COLR, HighLevelAlert:Trans("LID_WARNING"), format(HighLevelAlert:Trans("LID_SKULLELITESNEARBY"), NPSkullEliteCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
+				hla.text:SetText(format("[%s%s|r] %s", COLR, HighLevelAlert:Trans("WARNING"), format(HighLevelAlert:Trans("SKULLELITESNEARBY"), NPSkullEliteCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
 			else
-				hla.text:SetText(format("[%s%s|r] %s", COLR, HighLevelAlert:Trans("LID_WARNING"), format(HighLevelAlert:Trans("LID_SKULLELITESNEARBYS"), NPSkullEliteCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
+				hla.text:SetText(format("[%s%s|r] %s", COLR, HighLevelAlert:Trans("WARNING"), format(HighLevelAlert:Trans("SKULLELITESNEARBYS"), NPSkullEliteCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
 			end
 
 			hla:Show()
 		elseif NPSkullCount > 0 then
 			if NPSkullCount == 1 then
-				hla.text:SetText(format("[%s%s|r] %s", COLR, HighLevelAlert:Trans("LID_WARNING"), format(HighLevelAlert:Trans("LID_SKULLSNEARBY"), NPSkullCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
+				hla.text:SetText(format("[%s%s|r] %s", COLR, HighLevelAlert:Trans("WARNING"), format(HighLevelAlert:Trans("SKULLSNEARBY"), NPSkullCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
 			else
-				hla.text:SetText(format("[%s%s|r] %s", COLR, HighLevelAlert:Trans("LID_WARNING"), format(HighLevelAlert:Trans("LID_SKULLSNEARBYS"), NPSkullCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
+				hla.text:SetText(format("[%s%s|r] %s", COLR, HighLevelAlert:Trans("WARNING"), format(HighLevelAlert:Trans("SKULLSNEARBYS"), NPSkullCount, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:0:0|t")))
 			end
 
 			hla:Show()
 		elseif NPRedEliteCount > 0 then
 			if NPRedEliteCount == 1 then
-				hla.text:SetText(format("[%s%s|r] %s", COLY, HighLevelAlert:Trans("LID_CAUTION"), format(HighLevelAlert:Trans("LID_REDELITESNEARBY"), NPRedEliteCount)))
+				hla.text:SetText(format("[%s%s|r] %s", COLY, HighLevelAlert:Trans("CAUTION"), format(HighLevelAlert:Trans("REDELITESNEARBY"), NPRedEliteCount)))
 			else
-				hla.text:SetText(format("[%s%s|r] %s", COLY, HighLevelAlert:Trans("LID_CAUTION"), format(HighLevelAlert:Trans("LID_REDELITESNEARBYS"), NPRedEliteCount)))
+				hla.text:SetText(format("[%s%s|r] %s", COLY, HighLevelAlert:Trans("CAUTION"), format(HighLevelAlert:Trans("REDELITESNEARBYS"), NPRedEliteCount)))
 			end
 
 			hla:Show()
 		elseif NPRedCount > 0 then
 			if NPRedCount == 1 then
-				hla.text:SetText(format("[%s%s|r] %s", COLY, HighLevelAlert:Trans("LID_CAUTION"), format(HighLevelAlert:Trans("LID_REDSNEARBY"), NPRedCount)))
+				hla.text:SetText(format("[%s%s|r] %s", COLY, HighLevelAlert:Trans("CAUTION"), format(HighLevelAlert:Trans("REDSNEARBY"), NPRedCount)))
 			else
-				hla.text:SetText(format("[%s%s|r] %s", COLY, HighLevelAlert:Trans("LID_CAUTION"), format(HighLevelAlert:Trans("LID_REDSNEARBYS"), NPRedCount)))
+				hla.text:SetText(format("[%s%s|r] %s", COLY, HighLevelAlert:Trans("CAUTION"), format(HighLevelAlert:Trans("REDSNEARBYS"), NPRedCount)))
 			end
 
 			hla:Show()
