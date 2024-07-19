@@ -13,14 +13,14 @@ end
 
 function HighLevelAlert:InitSettings()
     HLATAB = HLATAB or {}
-    HighLevelAlert:SetVersion(AddonName, 136219, "0.4.35")
+    HighLevelAlert:SetVersion(AddonName, 136219, "0.4.36")
     hla_settings = HighLevelAlert:CreateFrame(
         {
             ["name"] = "HighLevelAlert",
             ["pTab"] = {"CENTER"},
             ["sw"] = 520,
             ["sh"] = 520,
-            ["title"] = format("HighLevelAlert |T136219:16:16:0:0|t v|cff3FC7EB%s", "0.4.35")
+            ["title"] = format("HighLevelAlert |T136219:16:16:0:0|t v|cff3FC7EB%s", "0.4.36")
         }
     )
 
