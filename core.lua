@@ -172,13 +172,6 @@ hla:SetScript(
 			if GetCVarBool("nameplateShowAll") == false then
 				HighLevelAlert:MSG(format(HighLevelAlert:Trans("NPSCVAR"), UNIT_NAMEPLATES_AUTOMODE))
 			else
-				--[[ NPC-Enemies Nameplates ]]
-				-- is enabled, when nameplateShowAll is
-				if GetCVarBool("nameplateShowEnemies") == false then
-					HighLevelAlert:MSG(format(HighLevelAlert:Trans("NPSCVAR"), UNIT_NAMEPLATES_SHOW_ENEMIES))
-					SetCVar("nameplateShowEnemies", true)
-				end
-
 				--[[ Player-Enemies Nameplates ]]
 				if GetCVarBool("UnitNameEnemyPlayerName") == false then
 					HighLevelAlert:MSG(format(HighLevelAlert:Trans("NPSCVAR"), UNIT_NAME_ENEMY))
