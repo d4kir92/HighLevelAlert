@@ -13,14 +13,14 @@ end
 
 function HighLevelAlert:InitSettings()
     HLATAB = HLATAB or {}
-    HighLevelAlert:SetVersion(AddonName, 136219, "0.4.42")
+    HighLevelAlert:SetVersion(AddonName, 136219, "0.4.43")
     hla_settings = HighLevelAlert:CreateFrame(
         {
             ["name"] = "HighLevelAlert",
             ["pTab"] = {"CENTER"},
             ["sw"] = 520,
             ["sh"] = 520,
-            ["title"] = format("HighLevelAlert |T136219:16:16:0:0|t v|cff3FC7EB%s", "0.4.42")
+            ["title"] = format("HighLevelAlert |T136219:16:16:0:0|t v|cff3FC7EB%s", "0.4.43")
         }
     )
 
@@ -82,34 +82,29 @@ function HighLevelAlert:InitSettings()
 
     HighLevelAlert:AddSlash("hla", HighLevelAlert.ToggleSettings)
     HighLevelAlert:AddSlash("highlevelalert", HighLevelAlert.ToggleSettings)
-    C_Timer.After(
-        0,
-        function()
-            HighLevelAlert:CreateMinimapButton(
-                {
-                    ["name"] = "HighLevelAlert",
-                    ["icon"] = 136219,
-                    ["dbtab"] = HLATAB,
-                    ["vTT"] = {{"HighLevelAlert |T136219:16:16:0:0|t", "v|cff3FC7EB0.4.42"}, {"Leftclick", "Toggle Settings"}, {"Rightclick", "Unlock/lock Text"}, {"Shift + Rightclick", "Hide Minimap Icon"}},
-                    ["funcL"] = function()
-                        HighLevelAlert:ToggleSettings()
-                    end,
-                    ["funcR"] = function()
-                        HighLevelAlert:ToggleFrame()
-                    end,
-                    ["funcSR"] = function()
-                        HighLevelAlert:SV(HLATAB, "MMBTN", false)
-                        HighLevelAlert:MSG("Minimap Button is now hidden.")
-                        HighLevelAlert:HideMMBtn("HighLevelAlert")
-                    end,
-                }
-            )
-
-            if HighLevelAlert:GV(HLATAB, "MMBTN", HighLevelAlert:GetWoWBuild() ~= "RETAIL") then
-                HighLevelAlert:ShowMMBtn("HighLevelAlert")
-            else
+    HighLevelAlert:CreateMinimapButton(
+        {
+            ["name"] = "HighLevelAlert",
+            ["icon"] = 136219,
+            ["dbtab"] = HLATAB,
+            ["vTT"] = {{"HighLevelAlert |T136219:16:16:0:0|t", "v|cff3FC7EB0.4.43"}, {"Leftclick", "Toggle Settings"}, {"Rightclick", "Unlock/lock Text"}, {"Shift + Rightclick", "Hide Minimap Icon"}},
+            ["funcL"] = function()
+                HighLevelAlert:ToggleSettings()
+            end,
+            ["funcR"] = function()
+                HighLevelAlert:ToggleFrame()
+            end,
+            ["funcSR"] = function()
+                HighLevelAlert:SV(HLATAB, "MMBTN", false)
+                HighLevelAlert:MSG("Minimap Button is now hidden.")
                 HighLevelAlert:HideMMBtn("HighLevelAlert")
-            end
-        end
+            end,
+        }
     )
+
+    if HighLevelAlert:GV(HLATAB, "MMBTN", HighLevelAlert:GetWoWBuild() ~= "RETAIL") then
+        HighLevelAlert:ShowMMBtn("HighLevelAlert")
+    else
+        HighLevelAlert:HideMMBtn("HighLevelAlert")
+    end
 end
