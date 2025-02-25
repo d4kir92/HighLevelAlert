@@ -1,4 +1,4 @@
-local AddonName, HighLevelAlert = ...
+local _, HighLevelAlert = ...
 HighLevelAlert:SetAddonOutput("HighLevelAlert", 136219)
 local hla_settings = nil
 function HighLevelAlert:ToggleSettings()
@@ -13,14 +13,14 @@ end
 
 function HighLevelAlert:InitSettings()
     HLATAB = HLATAB or {}
-    HighLevelAlert:SetVersion(136219, "0.4.51")
+    HighLevelAlert:SetVersion(136219, "0.4.52")
     hla_settings = HighLevelAlert:CreateFrame(
         {
             ["name"] = "HighLevelAlert",
             ["pTab"] = {"CENTER"},
             ["sw"] = 520,
             ["sh"] = 520,
-            ["title"] = format("|T136219:16:16:0:0|t HighLevelAlert v|cff3FC7EB%s", HighLevelAlert:GetVersion())
+            ["title"] = format("|T136219:16:16:0:0|t H|cff3FC7EBigh|rL|cff3FC7EBevel|rA|cff3FC7EBlert|r v|cff3FC7EB%s", HighLevelAlert:GetVersion())
         }
     )
 
@@ -87,7 +87,7 @@ function HighLevelAlert:InitSettings()
             ["name"] = "HighLevelAlert",
             ["icon"] = 136219,
             ["dbtab"] = HLATAB,
-            ["vTT"] = {{"|T136219:16:16:0:0|t HighLevelAlert", "v|cff3FC7EB" .. HighLevelAlert:GetVersion()}, {HighLevelAlert:Trans("LID_LEFTCLICK"), HighLevelAlert:Trans("LID_OPENSETTINGS")}, {HighLevelAlert:Trans("LID_RIGHTCLICK"), "Unlock/lock Text"}, {HighLevelAlert:Trans("LID_SHIFTRIGHTCLICK"), HighLevelAlert:Trans("LID_HIDEMINIMAPBUTTON")}},
+            ["vTT"] = {{"|T136219:16:16:0:0|t H|cff3FC7EBigh|rL|cff3FC7EBevel|rA|cff3FC7EBlert|r", "v|cff3FC7EB" .. HighLevelAlert:GetVersion()}, {HighLevelAlert:Trans("LID_LEFTCLICK"), HighLevelAlert:Trans("LID_OPENSETTINGS")}, {HighLevelAlert:Trans("LID_RIGHTCLICK"), "Unlock/lock Text"}, {HighLevelAlert:Trans("LID_SHIFTRIGHTCLICK"), HighLevelAlert:Trans("LID_HIDEMINIMAPBUTTON")}},
             ["funcL"] = function()
                 HighLevelAlert:ToggleSettings()
             end,
