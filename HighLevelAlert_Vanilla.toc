@@ -1,13 +1,15 @@
 ## Interface: 11506
-## Version: 0.4.50
+## Version: 0.4.51
 ## Title: HighLevelAlert |T136219:16:16:0:0|t by |cff3FC7EBD4KiR |T132115:16:16:0:0|t
 ## Notes: HighLevelAlert
 ## Author: D4KiR
+## X-Category: D4KiR
 ## DefaultState: enabled
 ## SavedVariables: HLATAB
 ## SavedVariablesPerCharacter: HLATABPC
 ## X-Curse-Project-ID: 852302
 ## X-Wago-ID: QNlqq46e
+## IconTexture: 136219
 
 libs\D4Lib\D4Lib.xml
 

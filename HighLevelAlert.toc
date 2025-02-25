@@ -4,10 +4,11 @@
 ## Interface-Cata: 40401, 40402
 ## Interface: 110007, 110100
 
-## Version: 0.4.50
+## Version: 0.4.51
 ## Title: HighLevelAlert by |cff3FC7EBD4KiR |T132115:16:16:0:0|t
 ## Notes: HighLevelAlert
 ## Author: D4KiR
+## X-Category: D4KiR
 ## DefaultState: enabled
 ## SavedVariables: HLATAB
 ## SavedVariablesPerCharacter: HLATABPC
