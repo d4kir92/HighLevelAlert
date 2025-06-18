@@ -13,7 +13,7 @@ end
 
 function HighLevelAlert:InitSettings()
     HLATAB = HLATAB or {}
-    HighLevelAlert:SetVersion(136219, "0.4.56")
+    HighLevelAlert:SetVersion(136219, "0.4.57")
     hla_settings = HighLevelAlert:CreateFrame(
         {
             ["name"] = "HighLevelAlert",
