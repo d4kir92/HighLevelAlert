@@ -2,9 +2,10 @@
 ## Interface-BCC: 20504
 ## Interface-Wrath: 30403
 ## Interface-Cata: 40401, 40402
+## Interface-Mists: 50500
 ## Interface: 110007, 110100, 110105, 110107, 110200
 
-## Version: 0.4.58
+## Version: 0.4.59
 ## Title: H|cff3FC7EBigh|rL|cff3FC7EBevel|rA|cff3FC7EBlert|r |T136219:16:16:0:0|t by |cff3FC7EBD4KiR |T132115:16:16:0:0|t
 ## Notes: HighLevelAlert
 ## Author: D|cff3FC7EB4KiR |T132115:16:16:0:0|t
