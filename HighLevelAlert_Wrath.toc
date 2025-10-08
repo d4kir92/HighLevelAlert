@@ -1,5 +1,5 @@
 ## Interface: 30300, 30403
-## Version: 0.4.61
+## Version: 0.4.62
 ## Title: H|cff3FC7EBigh|rL|cff3FC7EBevel|rA|cff3FC7EBlert|r |T136219:16:16:0:0|t by |cff3FC7EBD4KiR |T132115:16:16:0:0|t
 ## Notes: HighLevelAlert
 ## Notes-ruRU: Показывает предупреждение и воспроизводит звук, когда Вы находитесь рядом с Элитниками
