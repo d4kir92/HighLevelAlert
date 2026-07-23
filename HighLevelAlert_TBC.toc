@@ -1,5 +1,5 @@
 ## Interface: 20506
-## Version: 0.4.75
+## Version: 0.4.76
 ## Title: HighLevelAlert |T136219:16:16:0:0|t by |cff55d2ffD4KiR |T132115:16:16:0:0|t
 ## Notes: HighLevelAlert
 ## Notes-ruRU: Показывает предупреждение и воспроизводит звук, когда Вы находитесь рядом с Элитниками
