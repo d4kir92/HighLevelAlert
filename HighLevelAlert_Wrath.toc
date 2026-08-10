@@ -1,8 +1,17 @@
-## Interface: 30300, 30403
-## Version: 0.4.77
+## Interface: 30403
+## Version: 0.4.78
 ## Title: HighLevelAlert |T136219:16:16:0:0|t by |cff55d2ffD4KiR |T132115:16:16:0:0|t
-## Notes: HighLevelAlert
+## Notes: Displays a warning and plays a sound when you are near elite fighters
+## Notes-deDE: Zeigt eine Warnung an und gibt einen Ton wieder, wenn Sie sich in der Nähe von Elitekämpfern befinden
+## Notes-esES: Muestra una advertencia y reproduce un sonido cuando estás cerca de combatientes de élite
+## Notes-esMX: Muestra una advertencia y reproduce un sonido cuando estás cerca de combatientes de élite
+## Notes-frFR: Affiche un avertissement et joue un son lorsque vous êtes près de combattants d'élite
+## Notes-itIT: Mostra un avviso e riproduce un suono quando ti trovi vicino a combattenti d'élite
+## Notes-koKR: 정예 전투원 근처에 있을 때 경고를 표시하고 소리를 재생합니다
+## Notes-ptBR: Exibe um aviso e toca um som quando você está perto de combatentes de elite
 ## Notes-ruRU: Показывает предупреждение и воспроизводит звук, когда Вы находитесь рядом с Элитниками
+## Notes-zhCN: 当你靠近精英战斗者时显示警告并播放声音
+## Notes-zhTW: 當你靠近精英戰鬥者時顯示警告並播放聲音
 ## Author: D4KiR |T132115:16:16:0:0|t
 ## Category: Combat
 ## Category-deDE: Kampf
