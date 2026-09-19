@@ -66,7 +66,7 @@ end
 
 function HighLevelAlert:InitSettings()
 	HLATAB = HLATAB or {}
-	HighLevelAlert:SetVersion(136219, "0.5.0")
+	HighLevelAlert:SetVersion(136219, "0.5.1")
 	HighLevelAlert:AddSlash("hla", HighLevelAlert.ToggleSettings)
 	HighLevelAlert:AddSlash("highlevelalert", HighLevelAlert.ToggleSettings)
 	hlaset = HighLevelAlert:CreateUIWindow({
