@@ -1,6 +1,6 @@
 -- By D4KiR
 local _, HighLevelAlert = ...
-HighLevelAlert:SetAddonOutput("HighLevelAlert", 136219)
+HighLevelAlert:SetAddonOutput()
 local hlaset = nil
 local DEFAULT_WIDTH = 520
 local DEFAULT_HEIGHT = 520
@@ -66,7 +66,7 @@ end
 
 function HighLevelAlert:InitSettings()
 	HLATAB = HLATAB or {}
-	HighLevelAlert:SetVersion(136219, "0.5.3")
+	HighLevelAlert:SetVersion()
 	HighLevelAlert:AddSlash("hla", HighLevelAlert.ToggleSettings)
 	HighLevelAlert:AddSlash("highlevelalert", HighLevelAlert.ToggleSettings)
 	hlaset = HighLevelAlert:CreateUIWindow({
@@ -82,7 +82,7 @@ function HighLevelAlert:InitSettings()
 		end,
 		["getCollapsed"] = function(key) return GetCollapsed(key) end,
 		["setCollapsed"] = function(key, collapsed) SetCollapsed(key, collapsed) end,
-		["title"] = format("|T136219:16:16:0:0|t HighLevelAlert v%s", HighLevelAlert:GetVersion())
+		["title"] = format("|T%s:16:16:0:0|t HighLevelAlert v%s", HighLevelAlert:GetAddonIcon(), HighLevelAlert:GetVersion())
 	})
 
 	hlaset:SuspendLayout()
@@ -104,9 +104,9 @@ function HighLevelAlert:InitSettings()
 	hlaset:ResumeLayout()
 	HighLevelAlert:CreateMinimapButton({
 		["name"] = "HighLevelAlert",
-		["icon"] = 136219,
+		["icon"] = HighLevelAlert:GetAddonIcon(),
 		["dbtab"] = HLATAB,
-		["vTT"] = {{"|T136219:16:16:0:0|t HighLevelAlert", "v" .. HighLevelAlert:GetVersion()}, {HighLevelAlert:Trans("LID_LEFTCLICK"), HighLevelAlert:Trans("LID_OPENSETTINGS")}, {HighLevelAlert:Trans("LID_RIGHTCLICK"), "Unlock/lock Text"}, {HighLevelAlert:Trans("LID_SHIFTRIGHTCLICK"), HighLevelAlert:Trans("LID_HIDEMINIMAPBUTTON")}},
+		["vTT"] = {{format("|T%s:16:16:0:0|t HighLevelAlert", HighLevelAlert:GetAddonIcon()),"v" .. HighLevelAlert:GetVersion()}, {HighLevelAlert:Trans("LID_LEFTCLICK"), HighLevelAlert:Trans("LID_OPENSETTINGS")}, {HighLevelAlert:Trans("LID_RIGHTCLICK"), "Unlock/lock Text"}, {HighLevelAlert:Trans("LID_SHIFTRIGHTCLICK"), HighLevelAlert:Trans("LID_HIDEMINIMAPBUTTON")}},
 		["funcL"] = function() HighLevelAlert:ToggleSettings() end,
 		["funcR"] = function() HighLevelAlert:ToggleFrame() end,
 		["funcSR"] = function()
