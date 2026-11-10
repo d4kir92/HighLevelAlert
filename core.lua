@@ -256,18 +256,23 @@ FUA:SetScript(
 	function(self, event, unit)
 		local level = UnitLevel(unit)
 		local classification = UnitClassification(unit)
-		local isElite = classification == "worldboss" or classification == "rareelite" or classification == "elite"
 		local isEnemy = UnitIsEnemy("player", unit)
 		local isPlayer = UnitIsPlayer(unit)
 		if DEBUG then
 			isEnemy = true
 		end
 
+		if not HighLevelAlert:CanAccessValues(level, classification, isEnemy, isPlayer) then return end
+
 		if level and isEnemy then
 			local playerLevel = UnitLevel("player")
+			if not HighLevelAlert:CanAccessValue(playerLevel) then return end
+
+			local isElite = classification == "worldboss" or classification == "rareelite" or classification == "elite"
 			local isSkull = level == -1 or level >= playerLevel + 10
 			local isRed = level >= playerLevel + 3
-			if isPlayer and UnitIsPVP(unit) and HighLevelAlert:GV(HLATAB, "SHOWWARNINGFORPLAYERS", true) then
+			local isPvp = isPlayer and UnitIsPVP(unit)
+			if isPlayer and HighLevelAlert:CanAccessValue(isPvp) and isPvp and HighLevelAlert:GV(HLATAB, "SHOWWARNINGFORPLAYERS", true) then
 				if not UnitOnTaxi("player") then
 					PlaySound(SOUNDKIT.PVP_THROUGH_QUEUE or SOUNDKIT.RAID_WARNING, "Ambience")
 					table.insert(NPPvp, unit)
